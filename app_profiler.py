@@ -23,14 +23,14 @@ st.image(
 
 # Add a section for publications
 st.header("Publications")
-uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
+uploaded_file = st.file_uploader("publications.csv", type="csv")
 
 if uploaded_file:
     publications = pd.read_csv(uploaded_file)
     st.dataframe(publications)
 
     # Add filtering for year or keyword
-    keyword = st.text_input("Filter by keyword", "")
+    keyword = st.text_input("Filter by keyword", "Masoga")
     if keyword:
         filtered = publications[
             publications.apply(lambda row: keyword.lower() in row.astype(str).str.lower().values, axis=1)
@@ -53,66 +53,46 @@ if uploaded_file:
 st.header("Explore STEM Data")
 
 # Generate dummy data
-physics_data = pd.DataFrame({
-    "Experiment": ["Alpha Decay", "Beta Decay", "Gamma Ray Analysis", "Quark Study", "Higgs Boson"],
-    "Energy (MeV)": [4.2, 1.5, 2.9, 3.4, 7.1],
-    "Date": pd.date_range(start="2024-01-01", periods=5),
+thermostability_data = pd.DataFrame({
+    "Experiment": ["pfhsp40", "pfhop", "pff1010c", "pfhsp70", "pfhsp90"],
+    "Temperature (degCelcius)": [55.0, 60.0, 56.0, 70.5, 68.7],
 })
 
-astronomy_data = pd.DataFrame({
-    "Celestial Object": ["Mars", "Venus", "Jupiter", "Saturn", "Moon"],
-    "Brightness (Magnitude)": [-2.0, -4.6, -1.8, 0.2, -12.7],
-    "Observation Date": pd.date_range(start="2024-01-01", periods=5),
+substrate_affinity_data = pd.DataFrame({
+    "Protein": ["pfhsp40", "pfhop", "pff1010c", "pfhsp70", "pfhsp90"],
+    "Binding Affinity (AI)": [0.8, 0.4, 0.7, 0.6, 0.65],
 })
 
-weather_data = pd.DataFrame({
-    "City": ["Cape Town", "London", "New York", "Tokyo", "Sydney"],
-    "Temperature (°C)": [25, 10, -3, 15, 30],
-    "Humidity (%)": [65, 70, 55, 80, 50],
-    "Recorded Date": pd.date_range(start="2024-01-01", periods=5),
-})
 
 # Tabbed view for STEM data
 st.subheader("STEM Data Viewer")
 data_option = st.selectbox(
     "Choose a dataset to explore", 
-    ["Physics Experiments", "Astronomy Observations", "Weather Data"]
+    ["thermostability_data", "substrate_affinity_data"]
 )
 
-if data_option == "Physics Experiments":
-    st.write("### Physics Experiment Data")
-    st.dataframe(physics_data)
-    # Add widget to filter by Energy levels
-    energy_filter = st.slider("Filter by Energy (MeV)", 0.0, 10.0, (0.0, 10.0))
-    filtered_physics = physics_data[
-        physics_data["Energy (MeV)"].between(energy_filter[0], energy_filter[1])
+if data_option == "thermostability_data":
+    st.write("### Thermostability Data")
+    st.dataframe(thermostability_data)
+    # Add widget to filter by Temperature
+    temperature_filter = st.slider("Filter by Temperature (degCelcius)", 55.0, 70.5, (55.0, 70.5))
+    filtered_temperature = thermostability_data[
+        thermostability_data["Temperature (degCelcius)"].between(temperature_filter[0], temperature_filter[1])
     ]
-    st.write(f"Filtered Results for Energy Range {energy_filter}:")
-    st.dataframe(filtered_physics)
+    st.write(f"Filtered Results for Temperature Range {temperature_filter}:")
+    st.dataframe(filtered_temperature)
 
-elif data_option == "Astronomy Observations":
-    st.write("### Astronomy Observation Data")
-    st.dataframe(astronomy_data)
-    # Add widget to filter by Brightness
-    brightness_filter = st.slider("Filter by Brightness (Magnitude)", -15.0, 5.0, (-15.0, 5.0))
-    filtered_astronomy = astronomy_data[
-        astronomy_data["Brightness (Magnitude)"].between(brightness_filter[0], brightness_filter[1])
+elif data_option == "substrate_affinity_data":
+    st.write("### Substrate Affinity Data")
+    st.dataframe(substrate_affinity_data)
+    # Add widget to filter by Binding Affinity
+    affinity_filter = st.slider("Filter by Binding Affinity (AI)", 0.4, 0.8, (0.4, 0.8))
+    filtered_affinity = substrate_affinity_data[
+        substrate_affinity_data["Binding Affinity (AI)"].between(affinity_filter[0], affinity_filter[1])
     ]
-    st.write(f"Filtered Results for Brightness Range {brightness_filter}:")
-    st.dataframe(filtered_astronomy)
+    st.write(f"Filtered Results for Binding Affinity Range {affinity_filter}:")
+    st.dataframe(filtered_affinity)
 
-elif data_option == "Weather Data":
-    st.write("### Weather Data")
-    st.dataframe(weather_data)
-    # Add widgets to filter by temperature and humidity
-    temp_filter = st.slider("Filter by Temperature (°C)", -10.0, 40.0, (-10.0, 40.0))
-    humidity_filter = st.slider("Filter by Humidity (%)", 0, 100, (0, 100))
-    filtered_weather = weather_data[
-        weather_data["Temperature (°C)"].between(temp_filter[0], temp_filter[1]) &
-        weather_data["Humidity (%)"].between(humidity_filter[0], humidity_filter[1])
-    ]
-    st.write(f"Filtered Results for Temperature {temp_filter} and Humidity {humidity_filter}:")
-    st.dataframe(filtered_weather)
 
 # Add a contact section
 st.header("Contact Information")
