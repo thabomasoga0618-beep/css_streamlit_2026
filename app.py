@@ -24,7 +24,7 @@ st.write(f"**Institution:** {institution}")
 
 st.image(
     "20211104_160041.jpg",
-    caption="Nature (Pixabay)"
+    caption="Thabo's selfie"
 )
 
 # Add a section for publications
@@ -106,3 +106,4 @@ email = "thabo.masoga0618@gmail.com"
 
 
 st.write(f"You can reach {name} at {email}.")
+
