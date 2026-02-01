@@ -23,7 +23,7 @@ st.write(f"**Field of Research:** {field}")
 st.write(f"**Institution:** {institution}")
 
 st.image(
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+    "20211104_160041.jpg",
     caption="Nature (Pixabay)"
 )
 
@@ -103,5 +103,6 @@ elif data_option == "substrate_affinity_data":
 # Add a contact section
 st.header("Contact Information")
 email = "thabo.masoga0618@gmail.com"
+
 
 st.write(f"You can reach {name} at {email}.")
